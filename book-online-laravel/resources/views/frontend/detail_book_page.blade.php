@@ -4,6 +4,10 @@
 @endsection
 @section('title','Book Online')
 @section('content')
+<input type="hidden" value="{{$book->book_name}}" class="storage_book_name">
+<input type="hidden" value="{{\URL::current()}}" class="storage_url">
+<input type="hidden" value="{{$book->id}}" class="storage_id">
+
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-9">
@@ -145,9 +149,43 @@
                 <h4 class="ms-3 fw-bold title"><i class="fa-solid fa-list" style="font-size: 20px;"></i> Đọc nhiều nhất</h4>
             </div>
             @include('frontend.includes.topRead')
+            <div class="d-flex align-items-center">
+                <h4 class="ms-3 fw-bold title"><i class="fa-solid fa-list" style="font-size: 20px;"></i> Truyện đã đọc</h4>
+            </div>
 
         </div>
         <!-- Đọc nhiều nhất -->
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        const id = $('.storage_id').val();
+        const name = $('.storage_book_name').val();
+        const url = $('.storage_url').val();
+        const img = $('.gallery-item').attr('src');
+
+        var book_item = {
+            'id': id,
+            'name': name,
+            'url': url,
+            'img': img
+        }
+        
+        if (localStorage.getItem('readed_book') == null) {
+            localStorage.setItem('readed_book', '[]');
+        }
+        var old_data = JSON.parse(localStorage.getItem('readed_book'));
+        var matches = $.grep(old_data, function(obj) {
+            return obj.id == id;
+        })
+        if (matches.length) {
+            console.log('Truyện đã tồn tại trong danh sách đã đọc')
+        }
+        else{
+            old_data.push(book_item);
+            localStorage.setItem('readed_book', JSON.stringify(old_data));
+        }
+        localStorage.setItem('readed_book', JSON.stringify(old_data));
+    })
+</script>
 @endsection

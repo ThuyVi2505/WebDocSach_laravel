@@ -1,7 +1,7 @@
 @forelse($data_chapter as $value => $chapter)
 <tr class="align-middle" id="chapter-item{{$chapter->id}}">
     <td class="text-center">
-        {{ $loop->iteration }}
+        {{ $value + $data_chapter->firstItem() }}
     </td>
     <td class="px-3 text-start">
         <a class="card-title text-decoration-none text-primary fw-bold"><span class="font-monospace text-dark"> Chương {{ $chapter->chapter_number }}</span><br>{{ $chapter->chapter_name }}</a>

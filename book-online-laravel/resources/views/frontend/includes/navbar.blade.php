@@ -42,7 +42,7 @@
                         </div>
                     </li>
                     <li class="nav-item fw-bold">
-                        <a class="nav-link text-white" href="#"><i class="fa-solid fa-list"></i> Top Truyện</a>
+                        <a class="nav-link text-white" href="#"><i class="fa-solid fa-list"></i> Top Sách</a>
                     </li>
                 </ul>
                 <!-- Left links -->

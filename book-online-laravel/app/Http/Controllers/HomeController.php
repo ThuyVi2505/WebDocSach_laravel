@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+
 use App\Models\{Genre, Chapter, Book};
 
 class HomeController extends Controller
@@ -29,12 +30,13 @@ class HomeController extends Controller
     public function index()
     {
         // lấy thể loại đổ ra menu navbar -> App\Http\Providers\GenreViewServiceProvider
+        
         // lấy danh sách book slide
         $slide_book = Book::latest()->take(10);
         // lấy danh sách book có chapter mới nhất
         $book_with_lastest_chapter = Book::with(['chapter' => function ($query) {
             $query->where('chapter_status', 1)->orderBy('chapter_number', 'desc')->latest();
-        }])->where('book_status', 1)->orderByRaw('(SELECT MAX(chapter.created_at) FROM chapter WHERE chapter.book_id = book.id) desc')->get();
+        }])->where('book_status', 1)->orderByRaw('(SELECT MAX(chapter.created_at) FROM chapter WHERE chapter.book_id = book.id) desc')->paginate(8);
         // dd($book_with_lastest_chapter);
         return view('frontend.home')->with(compact('book_with_lastest_chapter'));
     }
@@ -49,7 +51,7 @@ class HomeController extends Controller
             $query->where('genre_slug', $slug_genre);
         })->with(['chapter' => function ($query) {
             $query->where('chapter_status', 1)->orderBy('chapter_number', 'desc')->latest();
-        }])->where('book_status', 1)->orderByRaw('(SELECT MAX(chapter.created_at) FROM chapter WHERE chapter.book_id = book.id) desc')->get();
+        }])->where('book_status', 1)->orderByRaw('(SELECT MAX(chapter.created_at) FROM chapter WHERE chapter.book_id = book.id) desc')->paginate(8);
         return view('frontend.book_with_genre')->with(compact('current_genre', 'book_with_genre'));
     }
     // detail book page

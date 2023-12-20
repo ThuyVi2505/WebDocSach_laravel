@@ -94,6 +94,7 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="mt-3">{!!$book_with_genre->appends($_GET)->links('layouts.pagination.pagination')!!}</div>
             </div>
         </div>
         <!-- Danh sách Thể loại -->

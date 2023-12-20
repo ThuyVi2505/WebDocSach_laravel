@@ -66,4 +66,6 @@
             @endforeach
         </div>
     </div>
+    <div class="mt-3">{!!$book_with_lastest_chapter->appends($_GET)->links('layouts.pagination.pagination')!!}</div>
+
 </div>
